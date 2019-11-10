@@ -29,13 +29,26 @@ gem 'devise'
 gem 'activeadmin'
 
 group :development, :test do
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'pry-rails'
+  gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'rspec-rails', '>= 3.5.0'
+  gem 'rubocop'
+  gem 'rubocop-rspec'
+  # gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'bundler-audit', require: false
+  gem 'brakeman', require: false
+end
+
+group :test do
+  # gem 'rspec-json_expectations'
 end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
 end
 
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

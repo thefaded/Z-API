@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'json'
+
+# Rubocop warnings
+`bin/rubocop --config config/rubocop.yml --auto-correct --only Style/StringLiterals`
+
+output = `bin/rubocop --config config/rubocop.yml --format json`
+output = JSON.parse output
+warnings = output['summary']['offense_count']
+
+if warnings > 0
+  puts "Warnings limit from Rubocop exceeded, please fix #{warnings} warnings"
+  exit(1)
+end
+
+# Security warnings and errors
+output = `bin/brakeman --quiet --skip-libs -f json`
+output = JSON.parse output
+warnings = output['scan_info']['security_warnings']
+
+if warnings > 0
+  puts 'Fix security errors ASAP'
+  exit(1)
+end
+
+# Check gem vulnerables
+exec 'bin/bundle-audit update'
+exec 'bin/bundle-audit'

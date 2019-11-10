@@ -1,0 +1,5 @@
+production:
+  adapter: postgresql
+  database: z_api_production
+  encoding: utf8
+  secret_key_base: <%= ENV["SECRET_KEY_BASE"] %>

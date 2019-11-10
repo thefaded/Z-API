@@ -1,0 +1,21 @@
+language: ruby
+rvm:
+  - 2.5.0
+addons:
+  postgresql: 10
+services:
+  - postgresql
+
+before_script:
+  - export SECRET_KEY_BASE=$(bundle exec rake secret RAILS_ENV=production)
+  - export DB=postgresql
+  - export RAILS_ENV=production
+  - psql -c "CREATE USER z_api;" -U postgres
+script:
+  - bundle exec rake db:drop
+  - bundle exec rake db:create
+  - bundle exec rake db:migrate
+  - bundle exec rake db:seed
+  - bundle exec rake assets:precompile
+  - bin/quality
+  - bundle exec rspec
