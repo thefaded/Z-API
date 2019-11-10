@@ -1,24 +1,17 @@
-# README
+# Z-API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Code Status
+[![Travis Status for Z-API](https://travis-ci.com/thefaded/Z-API.svg?token=YqKWNYCzFpYtDBiLct7H&branch=master)](https://travis-ci.com/thefaded/Z-API)
 
-Things you may want to cover:
+## Install dependencies
 
-* Ruby version
+    bundle
 
-* System dependencies
+## Setup DB
 
-* Configuration
+    bundle exec rake db:setup
+    bin/rails db:migrate
 
-* Database creation
+## Run project
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+    bin/rails s -p 3004
