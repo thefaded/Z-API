@@ -37,6 +37,8 @@ gem 'mailgun-ruby'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 gem 'redis'
+gem 'money-rails', '~>1.12'
+gem 'active_model_serializers'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

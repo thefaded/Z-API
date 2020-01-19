@@ -1,10 +1,5 @@
 ActiveAdmin.register User do # rubocop:disable Metrics/BlockLength
   actions :all, except: %i[new create destroy]
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  # permit_params :email, :phone, :gender
 
   action_item :create, only: %i[index] do
     link_to 'Create new employee', create_employee_form_admin_users_path
@@ -46,6 +41,7 @@ ActiveAdmin.register User do # rubocop:disable Metrics/BlockLength
     column :last_sign_in_at
     column :role
     column :admin
+    actions
   end
 
   # permit_params do

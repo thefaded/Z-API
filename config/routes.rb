@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users
+      resources :products, only: %i[index]
 
       # match "signup" => "registrations#client_signup", :via => :post
       post '/sign_up' => 'registrations#client_signup'

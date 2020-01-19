@@ -2,24 +2,18 @@ module Api
   module V1
     class UsersController < ApiController
       def index
-        render json: {
-          users: User.all
-        }
+        render json: User.all
       end
 
       def show
-        render json: {
-          user: User.find_by(id: params[:id])
-        }
+        render json: User.find_by(id: params[:id])
       end
 
       def update
         @user = User.find_by(id: params[:id])
 
         if @user.update(user_params)
-          render json: {
-            user: @user
-          }
+          render json: @user
         else
           render json: {
             errors: @user.errors.messages
