@@ -1,0 +1,37 @@
+.main_content_wrapper
+  .main_content
+    = form_for(@employee_form, url: create_employee_admin_users_path) do |f|
+      - if @employee_form.errors.any?
+        = render 'errors', errors: @employee_form.errors.full_messages
+
+      fieldset.inputs
+        ol
+          li class='string input required'
+            = f.label :first_name, class: 'label'
+            = f.text_field :first_name
+          li class='string input required'
+            = f.label :last_name, class: 'label'
+            = f.text_field :last_name
+          li class='email input required'
+            = f.label :email, class: 'label'
+            = f.text_field :email
+          li class='string input required'
+            = f.label :phone, class: 'label'
+            = f.text_field :phone
+          li class='input required'
+            = f.label :gender, class: 'label'
+            = f.select(:gender, options_for_select(User.genders.map{ |g| [g.first.humanize, g.first]}, User.genders.keys), {},
+          class: 'chosen-select-with-search', multiple: false)
+
+      fieldset.inputs
+        span.form_note
+          'If you do not specify a password, it will be generated automatically when creating
+        ol
+          li.password.input
+            = f.label :password
+            = f.password_field :password
+          li.password.input
+            = f.label :password_confirmation
+            = f.password_field :password_confirmation
+
+      = f.submit 'Create employee'

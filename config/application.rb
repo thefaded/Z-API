@@ -1,4 +1,6 @@
 require_relative 'boot'
+require_relative '../lib/authentication/token_strategy.rb'
+require_relative '../lib/authentication/response_token.rb'
 
 require 'rails'
 # Pick the frameworks you want:
@@ -22,6 +24,14 @@ module ZApi
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
+    # Use sidekiq
+    config.active_job.queue_adapter = :sidekiq
+    # Add delay methods
+    Sidekiq::Extensions.enable_delay!
+
+    # Add /lib folder to autload
+    config.autoload_paths += %W[#{config.root}/lib]
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
@@ -37,5 +47,22 @@ module ZApi
     config.middleware.use ActionDispatch::Flash
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
+
+    # Warden
+    config.middleware.use Warden::Manager do |manager|
+      Warden::Strategies.add(:basic_auth_terminal, Authentication::Strategies::BasicAuthTerminalStrategy)
+      Warden::Strategies.add(:jwt, Authentication::Strategies::JwtTokenStrategy)
+
+      # manager.default_strategies(scope: :user).unshift(:jwt, :basic_auth_terminal)
+      # manager.default_strategies(:jwt, :basic_auth_terminal)
+
+      manager.failure_app = proc do |_env|
+        ['401', { 'Content-Type' => 'application/json' }, { error: 'x Unauthorized x', code: 401 }.to_json]
+      end
+    end
+
+    Rack::Utils.multipart_part_limit = 512
+    # Middleware to set response token
+    # config.middleware.use Authentication::ResponseToken
   end
 end

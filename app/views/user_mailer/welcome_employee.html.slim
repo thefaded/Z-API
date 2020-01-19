@@ -1,0 +1,5 @@
+h1 Welcome to Z-API
+p Now you're part of a team!
+- if @reset_password_token
+  p
+    = link_to 'Change my password', edit_password_url(@user, reset_password_token: @reset_password_token)

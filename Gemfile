@@ -27,6 +27,16 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'devise'
 gem 'activeadmin'
+gem 'warden'
+gem 'jwt'
+gem 'bugsnag'
+gem 'slim-rails'
+gem 'jquery-rails'
+gem 'chosen-rails'
+gem 'mailgun-ruby'
+gem 'sidekiq'
+gem 'sidekiq-scheduler'
+gem 'redis'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -36,6 +46,7 @@ group :development, :test do
   gem 'rspec-rails', '>= 3.5.0'
   gem 'rubocop'
   gem 'rubocop-rspec'
+  gem 'rubocop-rails'
   # gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'faker'
@@ -44,11 +55,14 @@ group :development, :test do
 end
 
 group :test do
-  # gem 'rspec-json_expectations'
+  gem 'rspec-sidekiq'
+  gem 'email_spec'
+  gem 'rspec-json_expectations'
 end
 
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'letter_opener'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]

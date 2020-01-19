@@ -1,5 +1,22 @@
+require 'sidekiq/web'
+require 'sidekiq-scheduler/web'
+
 Rails.application.routes.draw do
-  devise_for :users
+  namespace :admin do
+    authenticate :user, lambda { |u| u.admin } do
+      mount Sidekiq::Web => '/sidekiq'
+    end
+  end
+
   ActiveAdmin.routes(self)
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  devise_for :users
+
+  namespace :api do
+    namespace :v1 do
+      resources :users
+
+      # match "signup" => "registrations#client_signup", :via => :post
+      post '/sign_up' => 'registrations#client_signup'
+    end
+  end
 end
